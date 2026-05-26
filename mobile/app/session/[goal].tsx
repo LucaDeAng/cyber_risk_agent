@@ -16,7 +16,7 @@ import { PhaseIndicator, type Phase } from '../../components/PhaseIndicator';
 import { palette, radius, spacing, typography } from '../../constants/theme';
 import { buildSessionWsUrl, endSession, startSession, type Goal } from '../../lib/api';
 import { TtsChunkPlayer } from '../../lib/audioPlayer';
-import { MockBpmSource } from '../../lib/biometrics';
+import { createBpmSource, type BpmSource } from '../../lib/biometrics';
 import { supabase } from '../../lib/supabase';
 
 export default function Session() {
@@ -29,7 +29,8 @@ export default function Session() {
 
   const wsRef = useRef<WebSocket | null>(null);
   const playerRef = useRef<TtsChunkPlayer | null>(null);
-  const bpmSourceRef = useRef<MockBpmSource | null>(null);
+  const bpmSourceRef = useRef<BpmSource | null>(null);
+  const [bpmLabel, setBpmLabel] = useState<string>('');
 
   useEffect(() => {
     let mounted = true;
@@ -96,14 +97,29 @@ export default function Session() {
         }
       };
 
-      const bpmSource = new MockBpmSource();
+      const bpmSource = await createBpmSource();
       bpmSourceRef.current = bpmSource;
-      bpmSource.start((value, tsMs) => {
-        setBpm(value);
-        if (ws.readyState === WebSocket.OPEN) {
-          ws.send(JSON.stringify({ type: 'bpm', bpm: value, ts_ms: tsMs }));
-        }
-      });
+      setBpmLabel(bpmSource.label);
+      try {
+        await bpmSource.start((value, tsMs) => {
+          setBpm(value);
+          if (ws.readyState === WebSocket.OPEN) {
+            ws.send(JSON.stringify({ type: 'bpm', bpm: value, ts_ms: tsMs }));
+          }
+        });
+      } catch (err) {
+        console.warn('bpm source failed, falling back to mock', err);
+        const { MockBpmSource } = await import('../../lib/biometrics');
+        const mock = new MockBpmSource();
+        bpmSourceRef.current = mock;
+        setBpmLabel(mock.label);
+        mock.start((value, tsMs) => {
+          setBpm(value);
+          if (ws.readyState === WebSocket.OPEN) {
+            ws.send(JSON.stringify({ type: 'bpm', bpm: value, ts_ms: tsMs }));
+          }
+        });
+      }
     }
 
     boot().catch((err) => {
@@ -152,6 +168,9 @@ export default function Session() {
 
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <BpmRing bpm={bpm} size={260} />
+        {bpmLabel ? (
+          <Text style={[typography.caption, { marginTop: spacing.md }]}>{bpmLabel}</Text>
+        ) : null}
       </View>
 
       <View

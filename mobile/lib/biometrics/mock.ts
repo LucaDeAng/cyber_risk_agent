@@ -1,22 +1,13 @@
+import type { BpmListener, BpmSource } from './types';
+
 /**
- * Biometric sources.
- *
- * Phase 0 (this MVP): mock BPM that walks a plausible curve. This lets us
- * exercise the entire WS protocol and adaptive narrative without depending
- * on a paired device.
- *
- * Phase 1: replace `MockBpmSource` with `HealthKitBpmSource` (iOS via
- * react-native-health) and `PolarBpmSource` (BLE via react-native-ble-plx).
+ * Plausible BPM walker. Drifts down with mild noise (mirrors what we expect
+ * during induction). Used in offline mode and dev to exercise the WS protocol.
  */
-
-export type BpmListener = (bpm: number, tsMs: number) => void;
-
-export interface BpmSource {
-  start(listener: BpmListener): void;
-  stop(): void;
-}
-
 export class MockBpmSource implements BpmSource {
+  readonly kind = 'mock' as const;
+  readonly label = 'Mock BPM (modalità dev)';
+
   private interval: ReturnType<typeof setInterval> | null = null;
   private bpm = 78;
   private trendDownProbability = 0.7;
@@ -35,5 +26,9 @@ export class MockBpmSource implements BpmSource {
       clearInterval(this.interval);
       this.interval = null;
     }
+  }
+
+  async isAvailable() {
+    return true;
   }
 }

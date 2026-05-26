@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { BpmRing } from '../../components/BpmRing';
 import { palette, radius, spacing, typography } from '../../constants/theme';
-import { MockBpmSource } from '../../lib/biometrics';
+import { createBpmSource, type BpmSource } from '../../lib/biometrics';
 import type { Goal } from '../../lib/api';
 
 type Protocol = {
@@ -38,9 +38,21 @@ export default function Home() {
   const [bpm, setBpm] = useState<number>(0);
 
   useEffect(() => {
-    const source = new MockBpmSource();
-    source.start((value) => setBpm(value));
-    return () => source.stop();
+    let source: BpmSource | null = null;
+    let cancelled = false;
+    createBpmSource().then(async (s) => {
+      if (cancelled) return;
+      source = s;
+      try {
+        await s.start((value) => setBpm(value));
+      } catch {
+        // Fail silently on the home preview — session screen handles fallback.
+      }
+    });
+    return () => {
+      cancelled = true;
+      source?.stop();
+    };
   }, []);
 
   return (

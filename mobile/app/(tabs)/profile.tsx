@@ -17,21 +17,30 @@ export default function Profile() {
         Profilo
       </Text>
 
-      {(['Dispositivo cardio', 'Voce preferita', 'Privacy', 'Lingua', 'Notifiche'] as const).map(
-        (label) => (
-          <Pressable
-            key={label}
-            onPress={() => Alert.alert(label, 'Configurazione disponibile in beta.')}
-            style={({ pressed }) => ({
-              backgroundColor: pressed ? palette.bgElevated : palette.bgRaised,
-              borderRadius: radius.md,
-              padding: spacing.lg,
-              marginBottom: spacing.sm,
-            })}>
-            <Text style={{ color: palette.text, fontSize: 16 }}>{label}</Text>
-          </Pressable>
-        ),
-      )}
+      {(
+        [
+          { label: 'Sorgente BPM', route: '/bpm-source' as const },
+          { label: 'Voce preferita', route: null },
+          { label: 'Privacy', route: null },
+          { label: 'Lingua', route: null },
+          { label: 'Notifiche', route: null },
+        ] as const
+      ).map((item) => (
+        <Pressable
+          key={item.label}
+          onPress={() => {
+            if (item.route) router.push(item.route);
+            else Alert.alert(item.label, 'Configurazione disponibile in beta.');
+          }}
+          style={({ pressed }) => ({
+            backgroundColor: pressed ? palette.bgElevated : palette.bgRaised,
+            borderRadius: radius.md,
+            padding: spacing.lg,
+            marginBottom: spacing.sm,
+          })}>
+          <Text style={{ color: palette.text, fontSize: 16 }}>{item.label}</Text>
+        </Pressable>
+      ))}
 
       <Pressable
         onPress={signOut}
