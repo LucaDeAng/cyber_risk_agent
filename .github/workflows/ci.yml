@@ -38,9 +38,25 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: npm
-          cache-dependency-path: mobile/package-lock.json
-      - name: Install (no audit, no lockfile required for first build)
+      - name: Install
         run: npm install --no-audit --legacy-peer-deps
       - name: Typecheck
         run: npx tsc --noEmit
+
+  landing:
+    name: Landing (typecheck + build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: landing
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install
+        run: npm install --no-audit
+      - name: Typecheck
+        run: npx tsc --noEmit
+      - name: Build
+        run: npm run build
