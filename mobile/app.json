@@ -1,0 +1,58 @@
+{
+  "expo": {
+    "name": "AI-Mind",
+    "slug": "ai-mind",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "aimind",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0B0F1A"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.aimind.app",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "AI-Mind ascolta la tua voce per personalizzare la sessione ipnotica in tempo reale. L'audio non viene mai salvato.",
+        "NSHealthShareUsageDescription": "AI-Mind legge il tuo battito cardiaco per adattare la profondità della trance.",
+        "NSHealthUpdateUsageDescription": "AI-Mind annota la sessione completata nella tua cronologia salute.",
+        "NSBluetoothAlwaysUsageDescription": "Per connettersi alla tua fascia cardio (es. Polar H10) durante le sessioni.",
+        "UIBackgroundModes": ["audio", "bluetooth-central"]
+      }
+    },
+    "android": {
+      "package": "com.aimind.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#0B0F1A"
+      },
+      "permissions": [
+        "RECORD_AUDIO",
+        "BLUETOOTH_CONNECT",
+        "BLUETOOTH_SCAN",
+        "ACTIVITY_RECOGNITION",
+        "BODY_SENSORS"
+      ]
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-av",
+        {
+          "microphonePermission": "AI-Mind ascolta la tua voce per personalizzare la sessione ipnotica."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "supabaseUrl": "__SET_IN_ENV__",
+      "supabaseAnonKey": "__SET_IN_ENV__",
+      "backendUrl": "https://api.aimind.app"
+    }
+  }
+}
