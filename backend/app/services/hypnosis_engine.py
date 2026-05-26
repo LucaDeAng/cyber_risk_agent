@@ -14,9 +14,9 @@ from pathlib import Path
 from anthropic import AsyncAnthropic
 
 from app.config import get_settings
-from app.services.types import BpmTrend, Goal, Phase
+from app.services.types import CRISIS_TOKEN, BpmTrend, Goal, Phase
 
-CRISIS_TOKEN = "<<<CRISIS_HANDOFF>>>"
+__all__ = ["CRISIS_TOKEN", "HypnosisEngine"]
 
 _PROMPT_PATH = Path(__file__).resolve().parent.parent / "prompts" / "system_hypnotic.md"
 

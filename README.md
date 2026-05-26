@@ -55,44 +55,54 @@ Vedi [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) per i diagrammi.
 
 ## 4. Quick Start
 
-### Prerequisiti
-- Node.js 20+, pnpm 9+
-- Python 3.12+, uv (o pip)
-- Docker (per Supabase locale opzionale)
-- iOS Simulator (Xcode) o Android Studio per il mobile
+### Modalità "zero-config" (consigliata per il primo avvio)
 
-### Variabili d'ambiente
-Copia `.env.example` → `.env` e popola:
-```bash
-ANTHROPIC_API_KEY=sk-ant-...
-ELEVENLABS_API_KEY=...
-DEEPGRAM_API_KEY=...           # oppure OPENAI_API_KEY per Whisper
-SUPABASE_URL=...
-SUPABASE_SERVICE_ROLE_KEY=...
-SUPABASE_ANON_KEY=...
-```
+L'MVP gira **senza nessuna chiave API**. Il sistema rileva automaticamente i provider mancanti e attiva i fallback:
 
-### Backend
+| Manca | Fallback attivo |
+|---|---|
+| `ANTHROPIC_API_KEY` | `ScriptedHypnosisEngine` — 15 script per fase × protocollo, hardcoded |
+| `ELEVENLABS_API_KEY` | `NullTTSStreamer` lato server + `expo-speech` lato client |
+| `DEEPGRAM_API_KEY` | STT disattivato (puoi inviare `user_utterance` come testo) |
+| `SUPABASE_URL` | `InMemoryKnowledgeBase` + sessioni in-process + auth ospite |
+
 ```bash
+# Backend
 cd backend
-uv venv && source .venv/bin/activate
-uv pip install -r requirements.txt
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8000
-```
 
-### Mobile
-```bash
+# Mobile (in un altro terminale)
 cd mobile
-pnpm install
-pnpm dlx expo start
+npm install
+npx expo start
 ```
-Premi `i` per iOS, `a` per Android.
 
-### Database
+Premi `i` per iOS Simulator, `a` per Android Emulator. Niente `.env` necessario.
+
+### Modalità "live" (per closed beta in poi)
+
+Quando vuoi voci ElevenLabs reali, dialogo Claude adattivo e persistenza Supabase:
+
+```bash
+cp .env.example .env
+# popola le 4 chiavi: ANTHROPIC_API_KEY, ELEVENLABS_API_KEY, DEEPGRAM_API_KEY,
+# SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY + SUPABASE_ANON_KEY
+```
+
+L'avvio rileva automaticamente le chiavi presenti — non c'è un toggle manuale.
+
+### Database (solo modalità live)
 ```bash
 cd supabase
-supabase db push   # applica le migration in supabase/migrations/
+supabase db push   # applica supabase/migrations/0001_init.sql
 ```
+
+### Prerequisiti
+- Node.js 20+, npm o pnpm
+- Python 3.12+
+- iOS Simulator (Xcode) o Android Studio per testare il mobile
 
 ---
 

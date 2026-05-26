@@ -24,14 +24,7 @@ jobs:
           pip install -r requirements.txt ruff pytest pytest-asyncio
       - name: Lint
         run: ruff check app tests
-      - name: Test
-        env:
-          ANTHROPIC_API_KEY: dummy
-          ELEVENLABS_API_KEY: dummy
-          DEEPGRAM_API_KEY: dummy
-          SUPABASE_URL: https://example.supabase.co
-          SUPABASE_SERVICE_ROLE_KEY: dummy
-          SUPABASE_ANON_KEY: dummy
+      - name: Test (offline mode, no provider keys)
         run: pytest -q
 
   mobile:

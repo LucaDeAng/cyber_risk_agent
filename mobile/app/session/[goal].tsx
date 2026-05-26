@@ -63,6 +63,9 @@ export default function Session() {
       ws.onmessage = async (e) => {
         const msg = JSON.parse(e.data as string);
         switch (msg.type) {
+          case 'ready':
+            playerRef.current?.setClientTtsMode(!!msg.client_tts_required);
+            break;
           case 'phase':
             setPhase(msg.phase);
             await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
@@ -72,6 +75,9 @@ export default function Session() {
             break;
           case 'audio_chunk':
             await playerRef.current?.enqueueB64(msg.b64);
+            break;
+          case 'turn_complete':
+            await playerRef.current?.speakClientSide(msg.text);
             break;
           case 'crisis_handoff':
             setCrisisActive(true);

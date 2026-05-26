@@ -9,3 +9,5 @@ from typing import Literal
 Phase = Literal["induction", "deepening", "suggestion", "integration", "awakening"]
 Goal = Literal["sleep", "focus_recovery", "layoff_resilience"]
 BpmTrend = Literal["falling", "stable", "rising", "unknown"]
+
+CRISIS_TOKEN = "<<<CRISIS_HANDOFF>>>"
