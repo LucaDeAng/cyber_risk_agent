@@ -81,7 +81,13 @@ class InMemoryKnowledgeBase:
         self, *, session_id: str, user_id: str, role: str, text: str, phase: str
     ) -> None:
         self.utterances.append(
-            {"session_id": session_id, "user_id": user_id, "role": role, "text": text, "phase": phase}
+            {
+                "session_id": session_id,
+                "user_id": user_id,
+                "role": role,
+                "text": text,
+                "phase": phase,
+            }
         )
 
     def record_biometric_sample(

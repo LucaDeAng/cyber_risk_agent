@@ -10,4 +10,4 @@ Phase = Literal["induction", "deepening", "suggestion", "integration", "awakenin
 Goal = Literal["sleep", "focus_recovery", "layoff_resilience"]
 BpmTrend = Literal["falling", "stable", "rising", "unknown"]
 
-CRISIS_TOKEN = "<<<CRISIS_HANDOFF>>>"
+CRISIS_TOKEN = "<<<CRISIS_HANDOFF>>>"  # noqa: S105  sentinel, not a credential

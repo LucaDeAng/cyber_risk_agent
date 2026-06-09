@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException
+from supabase import create_client
 
+from app.config import get_settings
 from app.services.factory import make_knowledge_base
 
 router = APIRouter()
@@ -23,8 +25,6 @@ async def personal_themes(user_id: str) -> dict:
             "utterance_count": len(user_utterances),
             "note": "In-memory mode — themes clustering ships in Phase 3 (see ROADMAP.md).",
         }
-    from app.config import get_settings
-    from supabase import create_client
 
     settings = get_settings()
     db = create_client(settings.supabase_url, settings.supabase_service_role_key)

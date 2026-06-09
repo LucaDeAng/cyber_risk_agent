@@ -12,6 +12,7 @@ import asyncio
 import base64
 import json
 import uuid
+from collections.abc import AsyncIterator
 from typing import Literal
 
 from fastapi import APIRouter, HTTPException, WebSocket, WebSocketDisconnect
@@ -142,7 +143,7 @@ async def session_stream(websocket: WebSocket, session_id: str) -> None:
     async def speak_one_turn() -> None:
         accumulated_text = ""
 
-        async def claude_chunks():
+        async def claude_chunks() -> AsyncIterator[str]:
             nonlocal accumulated_text
             async for piece in engine.stream_turn(
                 phase=state.phase,

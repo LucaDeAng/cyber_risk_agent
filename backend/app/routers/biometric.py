@@ -4,7 +4,9 @@ from __future__ import annotations
 
 from fastapi import APIRouter
 from pydantic import BaseModel
+from supabase import create_client
 
+from app.config import get_settings
 from app.services.factory import make_knowledge_base
 
 router = APIRouter()
@@ -38,8 +40,6 @@ async def get_session_biometrics(session_id: str) -> list[dict]:
     samples = getattr(kb, "biometrics", None)
     if samples is not None:
         return [s for s in samples if s["session_id"] == session_id]
-    from app.config import get_settings
-    from supabase import create_client
 
     settings = get_settings()
     db = create_client(settings.supabase_url, settings.supabase_service_role_key)

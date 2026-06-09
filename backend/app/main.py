@@ -1,5 +1,6 @@
 """FastAPI entrypoint for AI-Mind backend."""
 
+from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
 import structlog
@@ -13,7 +14,7 @@ log = structlog.get_logger()
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     settings = get_settings()
     log.info("startup", env=settings.environment, model=settings.anthropic_model)
     yield

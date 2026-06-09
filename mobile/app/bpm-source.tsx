@@ -41,7 +41,7 @@ export default function BpmSourcePicker() {
 
     createBpmSource().then((src) => {
       setActive(src.kind);
-      src.start((v) => setPreviewBpm(v)).catch(() => {});
+      Promise.resolve(src.start((v) => setPreviewBpm(v))).catch(() => {});
       return () => src.stop();
     });
   }, []);

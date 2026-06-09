@@ -30,7 +30,7 @@ class STTStreamer:
         finals: list[str] = []
         latest_partial = ""
 
-        async def on_transcript(_self, result, **_kwargs):
+        async def on_transcript(_self: object, result: object, **_kwargs: object) -> None:
             nonlocal latest_partial
             transcript = result.channel.alternatives[0].transcript
             if not transcript:

@@ -16,7 +16,7 @@ import { PhaseIndicator, type Phase } from '../../components/PhaseIndicator';
 import { palette, radius, spacing, typography } from '../../constants/theme';
 import { buildSessionWsUrl, endSession, startSession, type Goal } from '../../lib/api';
 import { TtsChunkPlayer } from '../../lib/audioPlayer';
-import { createBpmSource, type BpmSource } from '../../lib/biometrics';
+import { MockBpmSource, createBpmSource, type BpmSource } from '../../lib/biometrics';
 import { supabase } from '../../lib/supabase';
 
 export default function Session() {
@@ -109,7 +109,6 @@ export default function Session() {
         });
       } catch (err) {
         console.warn('bpm source failed, falling back to mock', err);
-        const { MockBpmSource } = await import('../../lib/biometrics');
         const mock = new MockBpmSource();
         bpmSourceRef.current = mock;
         setBpmLabel(mock.label);
