@@ -1,0 +1,27 @@
+# Netlify build configuration for the AI-Mind landing.
+#
+# This file lives at the repo root so Netlify picks it up regardless of
+# whether the dashboard's "Base directory" is set. It also explicitly
+# points to the landing/ subdirectory of this monorepo (the backend and
+# mobile workspaces are not part of the Netlify build).
+
+[build]
+  base    = "landing"
+  command = "npm install && npm run build"
+  publish = "landing/.next"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Use the official Next.js runtime plugin (auto-installed by Netlify when
+# a Next.js project is detected, but pinning it here makes the build
+# deterministic and self-describing for new contributors).
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Optional: when the backend is deployed (Railway/Fly), set this in the
+# Netlify dashboard so the /demo page can connect to it.
+#
+#   NEXT_PUBLIC_BACKEND_URL = "https://api.aimind.app"
+#
+# Without it, /demo gracefully fails to connect; home + waitlist still work.

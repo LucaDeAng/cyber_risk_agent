@@ -1,0 +1,465 @@
+/* AI-Mind pitch deck — bespoke reveal.js theme. */
+
+:root {
+  --bg: #0b0f1a;
+  --bg-raised: #121828;
+  --bg-elevated: #1a2238;
+  --text: #e8edf7;
+  --text-dim: #8c97ae;
+  --accent: #7b9cff;
+  --accent-deep: #3e58b8;
+  --warm: #e6b970;
+}
+
+html, body, .reveal {
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+  font-weight: 300;
+}
+
+.reveal .slides {
+  text-align: left;
+}
+
+.reveal section {
+  padding: 0 4rem;
+}
+
+.reveal h1 {
+  font-size: 5rem;
+  font-weight: 200;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: var(--text);
+  margin: 0 0 1.2rem;
+  text-transform: none;
+}
+
+.reveal h2 {
+  font-size: 2.6rem;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin: 0 0 2rem;
+  line-height: 1.2;
+  text-transform: none;
+}
+
+.reveal h3 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text);
+  margin: 0 0 0.5rem;
+  text-transform: none;
+}
+
+.reveal p {
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: var(--text-dim);
+  margin: 0 0 1rem;
+}
+
+.eyebrow {
+  font-size: 0.7rem !important;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 1.2rem;
+}
+
+.dot { color: var(--accent); }
+.accent { color: var(--accent); }
+.dim { color: var(--text-dim); }
+
+/* ── Title slide ─────────────────────────────────────────────── */
+.title {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.title h1 {
+  font-size: 6.5rem;
+}
+
+.title .tagline {
+  font-size: 1.6rem;
+  color: var(--text);
+  font-weight: 300;
+  line-height: 1.4;
+  margin: 1rem 0 2rem;
+}
+
+.title .meta {
+  font-size: 0.95rem;
+  color: var(--text-dim);
+  margin-top: 1.5rem;
+}
+
+.orb {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  border: 2px solid rgba(123, 156, 255, 0.4);
+  background: radial-gradient(circle at center, rgba(123, 156, 255, 0.18), transparent 70%);
+  animation: breathe 5s ease-in-out infinite;
+  margin-bottom: 2rem;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.55; }
+  50% { transform: scale(1.08); opacity: 0.9; }
+}
+
+/* ── Grids & cards ───────────────────────────────────────────── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+
+.card {
+  background: var(--bg-raised);
+  border-radius: 14px;
+  padding: 1.4rem 1.5rem;
+}
+
+.card.big {
+  padding: 2rem;
+}
+
+.card.accent-card {
+  border: 1px solid var(--accent);
+}
+
+.card .lead {
+  color: var(--accent);
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.6rem 0 0;
+}
+
+.card li {
+  font-size: 1rem;
+  color: var(--text-dim);
+  padding: 0.3rem 0 0.3rem 1rem;
+  position: relative;
+}
+
+.card li::before {
+  content: '·';
+  color: var(--accent);
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.card li strong {
+  color: var(--text);
+}
+
+/* ── Stats ───────────────────────────────────────────────────── */
+.stat {
+  background: var(--bg-raised);
+  padding: 1.5rem;
+  border-radius: 14px;
+}
+
+.huge {
+  font-size: 4.5rem;
+  font-weight: 200;
+  color: var(--accent);
+  line-height: 1;
+  margin: 0 0 0.5rem;
+}
+
+.huge sup, .huge small {
+  font-size: 1.6rem;
+  color: var(--text-dim);
+  font-weight: 300;
+  vertical-align: top;
+  margin-left: 0.2rem;
+}
+
+.stat p {
+  font-size: 0.95rem;
+  color: var(--text-dim);
+}
+
+.stat em {
+  color: var(--text);
+  font-style: normal;
+}
+
+/* ── Lists ───────────────────────────────────────────────────── */
+.big-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.big-list li {
+  font-size: 1.4rem;
+  color: var(--text-dim);
+  padding: 0.8rem 0 0.8rem 2rem;
+  position: relative;
+  border-top: 1px solid var(--bg-raised);
+}
+
+.big-list li:first-child { border-top: none; }
+
+.big-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1.4rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.big-list li strong {
+  color: var(--text);
+}
+
+.footnote {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+/* ── Demo slide ──────────────────────────────────────────────── */
+.demo-stack {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.phone {
+  background: #050810;
+  border-radius: 40px;
+  padding: 14px;
+  border: 1px solid #1d2742;
+}
+
+.phone-screen {
+  background: var(--bg);
+  border-radius: 30px;
+  padding: 1.4rem 1rem;
+  height: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.phase-label {
+  align-self: flex-start;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.18em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.phone-orb {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  border: 2px solid rgba(123, 156, 255, 0.5);
+  background: radial-gradient(circle at center, rgba(123, 156, 255, 0.2), transparent 70%);
+  animation: breathe 4s ease-in-out infinite;
+  margin: 1rem 0 1rem;
+}
+
+.bpm-label {
+  font-size: 0.7rem !important;
+  letter-spacing: 0.18em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.bpm-num {
+  font-size: 3.2rem !important;
+  color: var(--text);
+  margin: 0 0 1.5rem;
+  font-weight: 200;
+}
+
+.caption {
+  background: var(--bg-raised);
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  font-size: 0.85rem !important;
+  color: var(--text);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.caption em {
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 500;
+}
+
+.demo-notes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.demo-notes li {
+  font-size: 1.05rem;
+  color: var(--text-dim);
+  padding: 0.7rem 0 0.7rem 1.2rem;
+  position: relative;
+  border-top: 1px solid var(--bg-raised);
+}
+
+.demo-notes li:first-child { border-top: none; }
+
+.demo-notes li::before {
+  content: '◆';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  top: 0.7rem;
+}
+
+/* ── Tables ──────────────────────────────────────────────────── */
+.market-table, .roadmap-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.market-table th, .market-table td,
+.roadmap-table th, .roadmap-table td {
+  padding: 0.85rem 1rem;
+  font-size: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--bg-raised);
+}
+
+.market-table th, .roadmap-table th {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+.market-table td, .roadmap-table td {
+  color: var(--text-dim);
+}
+
+.market-table tr.highlight td, .roadmap-table tr.highlight td {
+  color: var(--text);
+  background: rgba(123, 156, 255, 0.08);
+}
+
+.market-table tr.highlight strong { color: var(--accent); }
+
+/* ── Moat flow ──────────────────────────────────────────────── */
+.moat-flow {
+  display: flex;
+  align-items: stretch;
+  gap: 0.8rem;
+  margin: 1.5rem 0;
+}
+
+.moat-step {
+  flex: 1;
+  background: var(--bg-raised);
+  border-radius: 14px;
+  padding: 1.2rem;
+  position: relative;
+}
+
+.moat-step.accent {
+  border: 1px solid var(--accent);
+}
+
+.moat-step span {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--bg);
+  text-align: center;
+  line-height: 28px;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+  font-size: 0.95rem;
+}
+
+.moat-step p {
+  font-size: 0.95rem;
+  color: var(--text);
+  margin: 0;
+}
+
+.moat-arrow {
+  align-self: center;
+  color: var(--text-dim);
+  font-size: 1.2rem;
+}
+
+/* ── Ask slide ──────────────────────────────────────────────── */
+.ask {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ask h1 {
+  font-size: 7rem;
+  color: var(--accent);
+}
+
+.ask .tagline {
+  font-size: 1.8rem;
+  color: var(--text);
+  font-weight: 300;
+  margin: 0 0 3rem;
+}
+
+.use-of-funds {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.use-of-funds div {
+  background: var(--bg-raised);
+  border-radius: 14px;
+  padding: 1.5rem;
+}
+
+.use-of-funds .huge {
+  font-size: 3.5rem;
+}
+
+.use-of-funds p:last-child {
+  font-size: 0.95rem;
+}
+
+.ask .meta {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
